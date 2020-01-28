@@ -11,5 +11,5 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", IndexHandler)
-	http.ListenAndServe("127.0.0.0:8088", nil)
+	http.ListenAndServe("127.0.0.1:8088", nil)
 }
