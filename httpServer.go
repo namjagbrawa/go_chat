@@ -1,24 +1,15 @@
 package main
 
-import "sync"
+import (
+	"fmt"
+	"net/http"
+)
 
-type Handler interface {
-	ServeHTTP(ResponseWriter, *Request)
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "hello world")
 }
 
-type ServeMux struct {
-	mu    sync.RWMutex
-	m     map[string]muxEntry
-	hosts bool
-}
-
-type muxEntry struct {
-	explicit bool
-	h        Handler
-	pattern  string
-}
-
-func ListenAndServe(addr string, handler Handler) error {
-	server := &Server{Addr: addr, Handler: handler}
-	return server.ListenAndServe()
+func main() {
+	http.HandleFunc("/", IndexHandler)
+	http.ListenAndServe("127.0.0.0:8088", nil)
 }
