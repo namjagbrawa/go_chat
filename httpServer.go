@@ -35,14 +35,20 @@ func WechatPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println("receive message parse to xml : ", m)
 	switch m.MsgType {
 	case text:
 		r_msg := Message{FromUserName: m.ToUserName,
 			ToUserName: m.FromUserName,
-		CreateTime:int(time.Now().Unix()),
-		MsgType:text,
-		Content:"text"}
-		fmt.Fprintln(w, xml.Marshal(r_msg))
+			CreateTime: int(time.Now().Unix()),
+			MsgType:    text,
+			Content:    "text"}
+		xml, err := xml.Marshal(r_msg)
+		if err != nil {
+			fmt.Printf("error: %v", err)
+			return
+		}
+		w.Write(xml)
 	}
 }
 
