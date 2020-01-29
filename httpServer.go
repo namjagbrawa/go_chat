@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -10,18 +11,24 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func WechatHandlerAuth(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	query := r.URL.Query()
-	echostr := query["echostr"][0]
-	fmt.Println("echostr = ", echostr)
+	method := r.Method
+	if method == http.MethodGet {
+		WechatGet(w, r)
+	}
+	if method == http.MethodPost {
+		WechatPost(w, r)
+	}
 
-	fmt.Fprintln(w, echostr)
+	fmt.Println("method = ", method)
 
-	/*body, _ := ioutil.ReadAll(r.Body)
+}
+
+func WechatPost(w http.ResponseWriter, r *http.Request) {
+	body, _ := ioutil.ReadAll(r.Body)
 	fmt.Println(string(body))
-	m := make(map[string]string)
+	// m := make(map[string]string)
 
-	err := json.Unmarshal(body, &m)
+	/*err := json.Unmarshal(body, &m)
 	if err != nil {
 
 		fmt.Println("Umarshal failed:", err)
@@ -33,6 +40,15 @@ func WechatHandlerAuth(w http.ResponseWriter, r *http.Request) {
 	for k, v := range m {
 		fmt.Println(k, ":", v)
 	}*/
+}
+
+func WechatGet(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	query := r.URL.Query()
+	echostr := query["echostr"][0]
+	fmt.Println("echostr = ", echostr)
+
+	fmt.Fprintln(w, echostr)
 }
 
 func postParam(req *http.Request) {
