@@ -32,7 +32,7 @@ func WechatHandlerAuth(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/test", IndexHandler)
+	http.HandleFunc("/chat", IndexHandler)
 	http.HandleFunc("/chat/wechat", WechatHandlerAuth)
 	http.ListenAndServe("127.0.0.1:8088", nil)
 }
