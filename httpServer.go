@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,20 +28,22 @@ func WechatHandlerAuth(w http.ResponseWriter, r *http.Request) {
 func WechatPost(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	fmt.Println(string(body))
-	// m := make(map[string]string)
-
-	/*err := json.Unmarshal(body, &m)
+	m := Message{}
+	err := xml.Unmarshal(body, &m)
 	if err != nil {
-
-		fmt.Println("Umarshal failed:", err)
+		fmt.Printf("error: %v", err)
 		return
 	}
 
-	fmt.Println("m:", m)
-
-	for k, v := range m {
-		fmt.Println(k, ":", v)
-	}*/
+	switch m.MsgType {
+	case text:
+		r_msg := Message{FromUserName: m.ToUserName,
+			ToUserName: m.FromUserName,
+		CreateTime:int(time.Now().Unix()),
+		MsgType:text,
+		Content:"text"}
+		fmt.Fprintln(w, xml.Marshal(r_msg))
+	}
 }
 
 func WechatGet(w http.ResponseWriter, r *http.Request) {
