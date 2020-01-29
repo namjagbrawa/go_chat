@@ -1,4 +1,4 @@
-package main
+package message
 
 import "encoding/xml"
 
@@ -26,7 +26,7 @@ type Message struct {
 }
 
 const (
-	text     = "text"
+	Text     = "text"
 	image    = "image"
 	voice    = "voice"
 	video    = "video"

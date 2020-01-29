@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
+	"github.com/namjagbrawa/go_chat/message"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -28,7 +29,7 @@ func WechatHandlerAuth(w http.ResponseWriter, r *http.Request) {
 func WechatPost(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	fmt.Println(string(body))
-	m := Message{}
+	m := message.Message{}
 	err := xml.Unmarshal(body, &m)
 	if err != nil {
 		fmt.Printf("error: %v", err)
@@ -37,11 +38,11 @@ func WechatPost(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("receive message parse to xml : ", m)
 	switch m.MsgType {
-	case text:
-		r_msg := Message{FromUserName: m.ToUserName,
+	case message.Text:
+		r_msg := message.Message{FromUserName: m.ToUserName,
 			ToUserName: m.FromUserName,
 			CreateTime: int(time.Now().Unix()),
-			MsgType:    text,
+			MsgType:    message.Text,
 			Content:    "text"}
 		xml, err := xml.Marshal(r_msg)
 		if err != nil {
