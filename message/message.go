@@ -11,18 +11,18 @@ type Message struct {
 	MsgId        uint64   `xml:"MsgId"`
 
 	Content      string `xml:"Content"`
-	PicUrl       uint64 `xml:"PicUrl"`
-	MediaId      uint64 `xml:"MediaId"`
-	Format       uint64 `xml:"Format"`
-	Recognition  uint64 `xml:"Recognition"`
-	ThumbMediaId uint64 `xml:"ThumbMediaId"`
-	Location_X   uint64 `xml:"Location_X"`
-	Location_Y   uint64 `xml:"Location_Y"`
-	Scale        uint64 `xml:"Scale"`
-	Label        uint64 `xml:"Label"`
-	Title        uint64 `xml:"Title"`
-	Description  uint64 `xml:"Description"`
-	Url          uint64 `xml:"Url"`
+	PicUrl       string `xml:"PicUrl"`
+	MediaId      string `xml:"MediaId"`
+	Format       string `xml:"Format"`
+	Recognition  string `xml:"Recognition"`
+	ThumbMediaId string `xml:"ThumbMediaId"`
+	Location_X   string `xml:"Location_X"`
+	Location_Y   string `xml:"Location_Y"`
+	Scale        string `xml:"Scale"`
+	Label        string `xml:"Label"`
+	Title        string `xml:"Title"`
+	Description  string `xml:"Description"`
+	Url          string `xml:"Url"`
 }
 
 const (
