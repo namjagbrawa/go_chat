@@ -1,4 +1,4 @@
-package main
+package chat
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-func httpGet(url string){
+func httpGet(url string) {
 	resp, _ := http.Get(url)
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -32,9 +32,9 @@ func httpPostForm() {
 	fmt.Println(string(body))
 }
 
-func main() {
+/*func main() {
 	// https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 	httpGet("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxb1a05ddc69040dff&secret=448b77cd710abad65950c57e85174760")
-}
+}*/
 
 // 29_cyivhJbuwvTN3wh2WUlWtojGEW-EqtgBgjDKlXR6x69akIwXfDkajTrmQQLuer-yrcyRatuG0jkJZiaZIK7tmHrwkX1KWEFCyZDfABPEdW_WUSVAvHNdfuQ34qPtVx2BEMXaS0_i-f7XFxGjOYGdAFAZJR
