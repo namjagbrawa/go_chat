@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/namjagbrawa/go_chat/chat"
+	"github.com/namjagbrawa/go_chat/exception"
 	"github.com/namjagbrawa/go_chat/tools"
 	"net/http"
 )
@@ -27,6 +28,6 @@ func getParam(req *http.Request) {
 func main() {
 	http.HandleFunc("/chat", IndexHandler)
 	http.HandleFunc("/chat/wechat", chat.WechatHandlerAuth)
-	http.HandleFunc("/tools/ebbinghaus", tools.Ebbinghaus)
+	http.HandleFunc("/tools/ebbinghaus", exception.ErrWrapper(tools.Ebbinghaus))
 	http.ListenAndServe("127.0.0.1:8088", nil)
 }

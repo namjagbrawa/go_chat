@@ -3,12 +3,13 @@ package tools
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/namjagbrawa/go_chat/exception"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-func Ebbinghaus(w http.ResponseWriter, r *http.Request) {
+func Ebbinghaus(w http.ResponseWriter, r *http.Request) error {
 	query := r.URL.Query()
 
 	startDate := query.Get("start_date")
@@ -17,13 +18,14 @@ func Ebbinghaus(w http.ResponseWriter, r *http.Request) {
 	if startDate == "" || days == "" {
 		err := ""
 		if startDate == "" {
-			err = err + "start_date is nil \n"
+			err = err + "param start_date is need \n"
 		}
 		if days == "" {
-			err = err + "days is nil"
+			err = err + "param days is need \n"
 		}
-		fmt.Println(w, err)
-		return
+		w.Write([]byte(err))
+
+		return exception.UserError("参数不正确")
 	}
 
 	// todo 异常捕获
@@ -34,6 +36,8 @@ func Ebbinghaus(w http.ResponseWriter, r *http.Request) {
 	resp := buildEbbinghausDate(startDate, days)
 
 	w.Write(resp)
+
+	return nil
 }
 
 func buildEbbinghausDate(startDate string, days string) []byte {
