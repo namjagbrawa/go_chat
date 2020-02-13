@@ -1,9 +1,11 @@
 package tools
 
 import (
+	"container/list"
 	"encoding/json"
 	"fmt"
 	"github.com/namjagbrawa/go_chat/exception"
+	"github.com/namjagbrawa/go_chat/utils"
 	"net/http"
 	"strconv"
 	"time"
@@ -58,8 +60,8 @@ func buildEbbinghausDate(startDate string, days string) []byte {
 	ebb[0] = []string{out.Format(LAYOUT)}
 	for i := 1; i < n; i++ {
 		out = out.Add(dd)
-		ebbT := make([]string, 6)
-		ebbT[0] = out.Format(LAYOUT)
+		ebbT := list.New()
+		ebbT.PushBack(out.Format(LAYOUT))
 
 		for j := 1; j <= len(gap); j++ {
 			ddn, _ := time.ParseDuration("-" + strconv.Itoa(24*gap[j-1]) + "h")
@@ -67,9 +69,10 @@ func buildEbbinghausDate(startDate string, days string) []byte {
 			if in.Unix() < start.Unix() {
 				break
 			}
-			ebbT[j] = in.Format(LAYOUT)
+			ebbT.PushBack(in.Format(LAYOUT))
 		}
-		ebb[i] = ebbT
+		ebb[i] = utils.ToArrayString(ebbT)
+		ebbT.Init()
 	}
 
 	for i := 0; i < len(ebb); i++ {
