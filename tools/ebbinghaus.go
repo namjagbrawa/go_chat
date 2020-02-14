@@ -3,8 +3,8 @@ package tools
 import (
 	"container/list"
 	"encoding/json"
-	"fmt"
 	"github.com/namjagbrawa/go_chat/exception"
+	"github.com/namjagbrawa/go_chat/log"
 	"github.com/namjagbrawa/go_chat/utils"
 	"net/http"
 	"strconv"
@@ -33,7 +33,7 @@ func Ebbinghaus(w http.ResponseWriter, r *http.Request) error {
 	// todo 异常捕获
 	// todo 参数校验返回
 
-	fmt.Println("start_date = ", startDate, "days = ", days)
+	log.Logger.Println("start_date = ", startDate, "days = ", days)
 
 	resp := buildEbbinghausDate(startDate, days)
 
@@ -76,12 +76,12 @@ func buildEbbinghausDate(startDate string, days string) []byte {
 	}
 
 	for i := 0; i < len(ebb); i++ {
-		fmt.Println(ebb[i])
+		log.Logger.Println(ebb[i])
 	}
 
 	ebbJson, _ := json.Marshal(ebb)
 
-	fmt.Println(string(ebbJson))
+	log.Logger.Println(string(ebbJson))
 
 	return ebbJson
 }
