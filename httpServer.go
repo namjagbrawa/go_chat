@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/namjagbrawa/go_chat/chat"
 	"github.com/namjagbrawa/go_chat/exception"
+	crossDomain "github.com/namjagbrawa/go_chat/http"
 	"github.com/namjagbrawa/go_chat/tools"
 	"net/http"
 )
@@ -28,6 +29,6 @@ func getParam(req *http.Request) {
 func main() {
 	http.HandleFunc("/chat", IndexHandler)
 	http.HandleFunc("/chat/wechat", chat.WechatHandlerAuth)
-	http.HandleFunc("/tools/ebbinghaus", exception.ErrWrapper(tools.Ebbinghaus))
+	http.HandleFunc("/tools/ebbinghaus", exception.ErrWrapper(crossDomain.CrossDomain(tools.Ebbinghaus)))
 	http.ListenAndServe("127.0.0.1:8088", nil)
 }

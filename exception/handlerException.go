@@ -15,9 +15,9 @@ func (e UserError) Message() string {
 	return string(e)
 }
 
-type appHandler func(writer http.ResponseWriter, request *http.Request) error
+type AppHandler func(writer http.ResponseWriter, request *http.Request) error
 
-func ErrWrapper(handler appHandler) func(http.ResponseWriter, *http.Request) {
+func ErrWrapper(handler AppHandler) func(http.ResponseWriter, *http.Request) {
 	//闭包
 	return func(writer http.ResponseWriter, request *http.Request) {
 		// 如果 发现 panic，判断错误输出错误，否则 继续往上层 panic
@@ -25,9 +25,9 @@ func ErrWrapper(handler appHandler) func(http.ResponseWriter, *http.Request) {
 			if r := recover(); r != nil {
 				log.Printf("Panic: %v", r)
 				http.Error(
-					writer,                                          //向writer汇报错误
+					writer, //向writer汇报错误
 					http.StatusText(http.StatusInternalServerError), //错误描述信息（字符串）
-					http.StatusInternalServerError) //系统内部错误
+					http.StatusInternalServerError)                  //系统内部错误
 			}
 		}()
 		// 执行业务代码操作，上面定义的 defer 就是防止 业务代码中出现 panic
